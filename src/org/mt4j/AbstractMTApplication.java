@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.media.opengl.GL;
+import javax.media.opengl.glu.GLU;
+
 import org.mt4j.components.css.util.CSSStyleManager;
 import org.mt4j.input.IKeyListener;
 import org.mt4j.input.InputManager;
@@ -36,8 +39,8 @@ import org.mt4j.sceneManagement.Iscene;
 import org.mt4j.sceneManagement.SceneChangeEvent;
 import org.mt4j.sceneManagement.transition.ITransition;
 import org.mt4j.util.ArrayDeque;
-import org.mt4j.util.PlatformUtil;
 import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.PlatformUtil;
 import org.mt4j.util.animation.AnimationManager;
 import org.mt4j.util.logging.ILogger;
 import org.mt4j.util.opengl.GL10;
@@ -50,11 +53,16 @@ import org.mt4j.util.opengl.GLTexture.EXPANSION_FILTER;
 import org.mt4j.util.opengl.GLTexture.SHRINKAGE_FILTER;
 import org.mt4j.util.opengl.GLTexture.WRAP_MODE;
 import org.mt4j.util.opengl.GLTextureSettings;
+import org.mt4j.util.opengl.JoglGL20;
+import org.mt4j.util.opengl.JoglGL20Plus;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
 import processing.core.PMatrix3D;
+import processing.opengl.PGraphicsOpenGL;
+import processing.opengl.PJOGL;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 
@@ -255,11 +263,11 @@ public abstract class AbstractMTApplication extends PApplet implements IMTApplic
 	
 	
 	public void setOpenGLErrorReportingEnabled(boolean reportErros){
-		if (reportErros){
-			hint(AbstractMTApplication.ENABLE_OPENGL_ERROR_REPORT);
-		}else{
-			hint(AbstractMTApplication.DISABLE_OPENGL_ERROR_REPORT);
-		}
+//		if (reportErros){
+//			hint(AbstractMTApplication.ENABLE_OPENGL_ERROR_REPORT);
+//		}else{
+//			hint(AbstractMTApplication.DISABLE_OPENGL_ERROR_REPORT);
+//		}
 	}
 	
 	/**
@@ -875,39 +883,43 @@ public abstract class AbstractMTApplication extends PApplet implements IMTApplic
     public boolean isGL20Available (){
     	return this.gl20Supported;
     }
-    
-    /**
-     * @return a {@link GLCommon} instance
-     */
-    public GLCommon getGLCommon (){
-    	return this.glCommon;
-    }
 
-    /**
-     * @return the {@link GL10} instance or null if not supported
-     */
-    public GL10 getGL10 (){
-    	return this.iGL10;
-    }
-
-    /**
-     * @return the {@link GL11} instance or null if not supported
-     */
-    public GL11 getGL11 (){
-    	return this.iGL11;
-    }
-    
-    /**
-     * @return the {@link GL20} instance or null if not supported
-     */
-    public GL20 getGL20 (){
-    	return this.iGL20;
-    }
-    
-    public GL11Plus getGL11Plus (){
-    	return this.iGL11Plus;
-    }
+	public GL getGL() {
+		PGraphicsOpenGL pGraphicsOpenGL = (PGraphicsOpenGL) g;
+		PJOGL pjogl = (PJOGL) pGraphicsOpenGL.pgl;
+		return pjogl.gl;
+	}
 	
+	@Override
+	public GLCommon getGLCommon() {
+		return new JoglGL20Plus(getGL().getGL2());
+	}
+	
+	@Deprecated
+	public GL10 getGL10() {
+		return new JoglGL20Plus(getGL().getGL2());
+	}
+	
+	@Deprecated
+	public GL11 getGL11() {
+		return new JoglGL20Plus(getGL().getGL2());
+	}
+	
+	@Deprecated
+	public GL11Plus getGL11Plus() {
+		return new JoglGL20Plus(getGL().getGL2());
+	}
+	
+	@Override
+	public GL20 getGL20() {
+		return new JoglGL20(getGL().getGL2());	
+	}
+	
+	public GLU getGLU() {
+		PGraphicsOpenGL pGraphicsOpenGL = (PGraphicsOpenGL) g;
+		PJOGL pjogl = (PJOGL) pGraphicsOpenGL.pgl;
+		return pjogl.glu;
+	}
 
 /////////////////////////	
 	/**
@@ -1048,5 +1060,38 @@ public abstract class AbstractMTApplication extends PApplet implements IMTApplic
 	//////////////////////////////////////////////////
 	
 
+
+	@Override
+	public void breakShape() {
+		throw new NotImplementedException();
+	}
+
+
+
+	@Override
+	public void text(char c) {
+		throw new NotImplementedException();
+	}
+
+
+
+	@Override
+	public void text(String str) {
+		throw new NotImplementedException();
+	}
+
+
+
+	@Override
+	public void text(String s, float x1, float y1, float x2, float y2, float z) {
+		throw new NotImplementedException();
+	}
+
+
+
+	@Override
+	public void mask(int[] maskArray) {
+		throw new NotImplementedException();
+	}
 	
 }

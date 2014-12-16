@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/ani.jar"/>
-	<classpathentry kind="lib" path="lib/batik-css.jar"/>
-	<classpathentry kind="lib" path="lib/xml-apis-ext.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/mt4j-desktop/lib/core.jar"/>
-	<classpathentry kind="lib" path="/mt4j-desktop/lib/jogl/jogl.jar"/>
+	<classpathentry kind="src" path="processing-2.2.1"/>
+	<classpathentry exported="true" kind="lib" path="lib/ani.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/batik-css.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml-apis-ext.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/gluegen-rt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jogl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="mt4j-core"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="mt4jPro2Jogl2"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
